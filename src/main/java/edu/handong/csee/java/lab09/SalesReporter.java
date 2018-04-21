@@ -34,7 +34,7 @@ public class SalesReporter {
 	 */
 	public void getData() {	
 		int count=1;
-		while(true) {																// repeat without any condition
+		while(true) {															// repeat without any condition
 			System.out.println("Enter data for associate number "+ count);		// print out a message to get input and the number of associate 
 						
 			System.out.print("Enter name of sales associate:");
@@ -49,14 +49,14 @@ public class SalesReporter {
 			
 			team.add(mySalesman);
 			
-			myScanner.nextLine();
+			myScanner.nextLine();												// empty the buffer '\n'
 			
-			System.out.print("More data for the list? ");
-			String ans = myScanner.nextLine();
-			count++;
+			System.out.print("More data for the list? ");						
+			String ans = myScanner.nextLine();									// ask to get more data for the list
+			count++;															// increase count
 			
-			if(ans.equals("no"))
-				break;
+			if(ans.equals("no"))									
+				break;															// if 'ans' is "no", break the loop
 			
 		}
 	}
@@ -66,10 +66,10 @@ public class SalesReporter {
 	 * This calculates the average of all 'sales'!
 	 */
 	public void calculateAverageSales() {
-		double sum = 0;													// declare a variable 'sum' and initiate to 0
+		double sum = 0;												// declare a variable 'sum' and initiate to 0
 			
-		for(Salesman mySalesman: team) {						// repeat
-			double sales = mySalesman.getSales();						// calling the method 'getSales' and putting into variable 'sales'
+		for(Salesman mySalesman: team) {							// repeat for the length of team
+			double sales = mySalesman.getSales();					// calling the method 'getSales' and putting into variable 'sales'
 			sum = sum+sales;										// update the sum of all 'sales'
 		}
 		
@@ -82,9 +82,9 @@ public class SalesReporter {
 	 */
 	public void calculateHighestSales() {
 		
-		highestSales = team.get(0).getSales();								// setting the instance variable 'highestSales' to 'team.get(0).getSales()'
+		highestSales = team.get(0).getSales();							// setting the instance variable 'highestSales' to 'team.get(0).getSales()'
 		
-		for(Salesman mySalesman: team) {							// repeat
+		for(Salesman mySalesman: team) {								// repeat for the length of team
 			if(highestSales < mySalesman.getSales()) {					
 				highestSales = mySalesman.getSales();					// if highestSales<mySalesman.getSales(), update 'highestSales'
 			}
