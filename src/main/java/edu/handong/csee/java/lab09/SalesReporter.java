@@ -1,6 +1,7 @@
 package edu.handong.csee.java.lab09;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 /**
  * This is a class named 'SalesReporter'!
@@ -9,22 +10,12 @@ import java.util.Scanner;
  *
  */
 public class SalesReporter {
-	private double highestSales;								// declaring instance variable 'highestSales' 
-	private double averageSales;								// declaring instance variable 'averageSales'
-	private Salesman[] team;									// declaring instance variable 'team' from class named 'Salesman'
-	private int numOfSalesman;									// declaring instance variable 'numOfSalesman'
+	private double highestSales;									// declaring instance variable 'highestSales' 
+	private double averageSales;									// declaring instance variable 'averageSales'
+	private ArrayList<Salesman> team = new ArrayList<Salesman>();		// declaring instance variable 'team' from class named 'Salesman'
 	
-	Scanner myScanner = new Scanner(System.in);					// create an object of 'Scanner' class, 'myScanner'
-	
-	/**
-	 * This is a default constructor!
-	 * This gets the number of sales associates from user!
-	 */
-	public SalesReporter() {		
-		System.out.print("Enter number of sales associates: ");
-		numOfSalesman = myScanner.nextInt();							// getting the input 'numOfSalesman'
-	}
-	
+	Scanner myScanner = new Scanner(System.in);						// create an object of 'Scanner' class, 'myScanner'
+		
 	/**
 	 * This is the main method!
 	 * @param args
@@ -39,17 +30,13 @@ public class SalesReporter {
 	
 	/**
 	 * This is a method named 'getData'!
-	 * This repeatedly gets the inputs and update 'team[i]'!
+	 * This repeatedly gets the input!
 	 */
-	public void getData() {
-		
-		team = new Salesman[numOfSalesman];										// setting the instance variable 'team' to 'Salesman' with array size of 'numOfSalesman'
-		
-		for(int i=0; i < numOfSalesman; i++) {									// repeat until i<numOfSalesman and i++
-			System.out.println("Enter data for associate number " + (i+1));		// print out a message to get input and the number of associate 
-			
-			myScanner.nextLine();												// empty the buffer '\n'
-			
+	public void getData() {	
+		int count=1;
+		while(true) {																// repeat without any condition
+			System.out.println("Enter data for associate number "+ count);		// print out a message to get input and the number of associate 
+						
 			System.out.print("Enter name of sales associate:");
 			String name = myScanner.nextLine();									// getting the input 'name'
 			
@@ -60,7 +47,17 @@ public class SalesReporter {
 			mySalesman.setName(name);											// calling the method 'setName' to 'mySalesman'
 			mySalesman.setSales(sales);											// calling the method 'setSales' to 'mySalesman'
 			
-			team[i] = mySalesman;												// updating the variable 'team[i]
+			team.add(mySalesman);
+			
+			myScanner.nextLine();
+			
+			System.out.print("More data for the list? ");
+			String ans = myScanner.nextLine();
+			count++;
+			
+			if(ans.equals("no"))
+				break;
+			
 		}
 	}
 	
@@ -71,12 +68,12 @@ public class SalesReporter {
 	public void calculateAverageSales() {
 		double sum = 0;													// declare a variable 'sum' and initiate to 0
 			
-		for(int i=0; i < team.length; i++) {						// repeat until i<tem.length and i++
-			double sales = team[i].getSales();						// calling the method 'getSales' and putting into variable 'sales'
+		for(Salesman mySalesman: team) {						// repeat
+			double sales = mySalesman.getSales();						// calling the method 'getSales' and putting into variable 'sales'
 			sum = sum+sales;										// update the sum of all 'sales'
 		}
 		
-		averageSales = sum/team.length;								// calculating the average of 'sales'
+		averageSales = sum/team.size();								// calculating the average of 'sales'
 	}
 	
 	/**
@@ -85,10 +82,11 @@ public class SalesReporter {
 	 */
 	public void calculateHighestSales() {
 		
-		highestSales = team[0].getSales();								// setting the instance variable 'highestSales' to 'team[0].getSales()'
-		for(int i=0; i < team.length-1; i++) {							// repeat until i<team.length-1 and i++
-			if(highestSales < team[i+1].getSales()) {					
-				highestSales = team[i+1].getSales();					// if highestSales<team[i+1].getSales(), update 'highestSales'
+		highestSales = team.get(0).getSales();								// setting the instance variable 'highestSales' to 'team.get(0).getSales()'
+		
+		for(Salesman mySalesman: team) {							// repeat
+			if(highestSales < mySalesman.getSales()) {					
+				highestSales = mySalesman.getSales();					// if highestSales<mySalesman.getSales(), update 'highestSales'
 			}
 		}
 	}
@@ -104,12 +102,12 @@ public class SalesReporter {
 		
 		System.out.println("The following had the highest sales: ");					// print detail information of highest sales
 		
-		for(int i=0; i < team.length; i++) {											// repeat until i<team.length and i++
-			if(team[i].getSales() == highestSales) {
-				System.out.println("Name: " + team[i].getName());
-				System.out.println("Sales: $" + team[i].getSales());
-				System.out.println("$" + (team[i].getSales() - averageSales) + " above the average.");
-			}	// if team[i].getSales() equals to 'highestSales', print detail information of 'team[i]'
+		for(Salesman mySalesman: team) {											
+			if(mySalesman.getSales() == highestSales) {
+				System.out.println("Name: " + mySalesman.getName());
+				System.out.println("Sales: $" +mySalesman.getSales());
+				System.out.println("$" + (mySalesman.getSales() - averageSales) + " above the average.");
+			}	// if mySalesman.getSales() equals to 'highestSales', print detail information of 'mySalesman'
 		}
 	}
 	
